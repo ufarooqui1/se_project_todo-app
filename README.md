@@ -1,17 +1,19 @@
 # Simple Todo App
 
-Give a brief description of the project here. Feel free to give it a different name.
+A user-friendly web application for managing a simple to-do list—add tasks with due dates and delete them with ease.
 
 ## Functionality
 
-Give a more detailed explanation of the project and its functionality.
+- Add new tasks with due dates
+- Delete task using the delete button
+- Form validation for user input
 
 ## Technology
 
-Give a description of the technologies and techniques used. Pictures, GIFs, or screenshots that detail the project features are recommended.
+- Javascirpt: structured with classes (Todo, FormValidator)
+- HTML, CSS: for structure and styling
+- GitHub Page: used for deployment
 
 ## Deployment
 
-This project is deployed on GitHub Pages:
-
-- ADD LINK HERE
+This project is deployed on GitHub Pages: https://github.com/ufarooqui1/se_project_todo-app
