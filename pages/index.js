@@ -8,8 +8,8 @@ const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
 const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
-// const todoTemplate = document.querySelector("#todo-template"); --remove
 const todosList = document.querySelector(".todos__list");
+const countertext = document.querySelector(".todos__counter");
 
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
@@ -19,36 +19,21 @@ const closeModal = (modal) => {
   modal.classList.remove("popup_visible");
 };
 
-// The logic in this function should all be handled in the Todo class.
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
+
+  todo.onToggle = updateCounter;
+  todo.onDelete = updateCounter;
+
   const todoElement = todo.getView();
+
   return todoElement;
+};
 
-  // TO BE REMOVED:
-
-  // todoNameEl.textContent = data.name;
-  // todoCheckboxEl.checked = data.completed;
-
-  // // Apply id and for attributes.
-  // // The id will initially be undefined for new todos.
-  // todoCheckboxEl.id = `todo-${data.id}`;
-  // todoLabel.setAttribute("for", `todo-${data.id}`);
-
-  // // If a due date has been set, parsing this it with `new Date` will return a
-  // // number. If so, we display a string version of the due date in the todo.
-  // const dueDate = new Date(data.date);
-  // if (!isNaN(dueDate)) {
-  //   todoDate.textContent = `Due: ${dueDate.toLocaleString("en-US", {
-  //     year: "numeric",
-  //     month: "short",
-  //     day: "numeric",
-  //   })}`;
-  // }
-
-  // todoDeleteBtn.addEventListener("click", () => {
-  //   todoElement.remove();
-  // });
+const updateCounter = () => {
+  const allTodos = todosList.querySelectorAll(".todo").length;
+  const completedTodos = todosList.querySelectorAll(".todo_completed").length;
+  countertext.textContent = `${completedTodos} of ${allTodos} completed`;
 };
 
 addTodoButton.addEventListener("click", () => {
@@ -72,7 +57,11 @@ addTodoForm.addEventListener("submit", (evt) => {
   const values = { name, date, id };
   const todo = generateTodo(values);
   todosList.append(todo);
+
   closeModal(addTodoPopup);
+
+  newFormValidator.resetValidation();
+  updateCounter();
 });
 
 initialTodos.forEach((item) => {
@@ -80,5 +69,7 @@ initialTodos.forEach((item) => {
   todosList.append(todo);
 });
 
-const newFormValidator = new FormValidator(validationConfig, addTodoForm);
+updateCounter();
+
+const newFormValidator = new FormValidator(addTodoForm, validationConfig);
 newFormValidator.enableValidation();

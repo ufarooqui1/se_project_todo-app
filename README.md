@@ -16,4 +16,4 @@ A user-friendly web application for managing a simple to-do list—add tasks wit
 
 ## Deployment
 
-This project is deployed on GitHub Pages: https://github.com/ufarooqui1/se_project_todo-app
+This project is deployed on GitHub Pages: https://ufarooqui1.github.io/se_project_todo-app/
