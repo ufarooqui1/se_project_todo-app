@@ -8,7 +8,6 @@ const addTodoForm = document.forms["add-todo-form"];
 const addTodoPopup = addTodoForm.closest(".popup");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
 const todosList = document.querySelector(".todos__list");
-const countertext = document.querySelector(".todos__counter");
 
 const openModal = (modal) => {
   modal.classList.add("popup_visible");
@@ -20,20 +19,12 @@ const closeModal = (modal) => {
 
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
-  todo.onToggle = updateCounter;
-  todo.onDelete = updateCounter;
   return todo.getView();
 };
 
 const renderTodo = (item) => {
   const todo = generateTodo(item);
   todosList.append(todo);
-};
-
-const updateCounter = () => {
-  const allTodos = todosList.querySelectorAll(".todo").length;
-  const completedTodos = todosList.querySelectorAll(".todo_completed").length;
-  countertext.textContent = `${completedTodos} of ${allTodos} completed`;
 };
 
 addTodoButton.addEventListener("click", () => {
@@ -60,14 +51,11 @@ addTodoForm.addEventListener("submit", (evt) => {
 
   closeModal(addTodoPopup);
   newFormValidator.resetValidation();
-  updateCounter();
 });
 
 initialTodos.forEach((item) => {
   renderTodo(item);
 });
-
-updateCounter();
 
 const newFormValidator = new FormValidator(addTodoForm, validationConfig);
 newFormValidator.enableValidation();
