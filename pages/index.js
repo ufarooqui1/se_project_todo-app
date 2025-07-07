@@ -51,7 +51,8 @@ const addTodoPopup = new PopupWithForm({
     const todoElement = new Todo(
       values,
       "#todo-template",
-      handleCheck
+      handleCheck,
+      handleDelete
     ).getView();
 
     section.addItem(todoElement);
