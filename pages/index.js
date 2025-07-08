@@ -22,12 +22,14 @@ function handleDelete(completed) {
   todoCounter.updateTotal(false);
 }
 
+function renderTodo(item) {
+  const todo = new Todo(item, "#todo-template", handleCheck, handleDelete);
+  section.addItem(todo.getView());
+}
+
 const section = new Section({
   items: initialTodos,
-  renderer: (item) => {
-    const todo = new Todo(item, "#todo-template", handleCheck, handleDelete);
-    section.addItem(todo.getView());
-  },
+  renderer: renderTodo,
   containerSelector: ".todos__list",
 });
 
@@ -35,7 +37,6 @@ section.renderItems();
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
-
   handleFormSubmit: (inputValues) => {
     const { name, date } = inputValues;
 
@@ -48,23 +49,17 @@ const addTodoPopup = new PopupWithForm({
     const id = uuidv4();
     const values = { name, date: parsedDate, id };
 
-    const todoElement = new Todo(
-      values,
-      "#todo-template",
-      handleCheck,
-      handleDelete
-    ).getView();
-
-    section.addItem(todoElement);
+    renderTodo(values);
     todoCounter.updateTotal(true);
-
     newFormValidator.resetValidation();
     addTodoPopup.close();
   },
 });
+
 addTodoPopup.setEventListeners();
 
 addTodoButton.addEventListener("click", () => {
+  addTodoPopup.getForm().reset();
   addTodoPopup.open();
 });
 
